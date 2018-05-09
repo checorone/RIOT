@@ -1,0 +1,3 @@
+[submodule "examples/project/thirdparty/mqttlib"]
+	path = examples/project/thirdparty/mqttlib
+	url = git@github.com:eclipse/paho.mqtt.embedded-c.git
