@@ -13,7 +13,7 @@
 #define UART_STDIO_DEV      (UART_UNDEF)
 #endif
 
-int uart_enable(int dev, uint32_t baud, rx_cb_t rx_cb) {
+int uart_setup(int dev, uint32_t baud, rx_cb_t rx_cb) {
     /* initialize UART */
     int res = uart_init(UART_DEV(dev), baud, rx_cb, (void *)dev);
     if (res == UART_NOBAUD) 
@@ -23,14 +23,14 @@ int uart_enable(int dev, uint32_t baud, rx_cb_t rx_cb) {
 
     /* Test if poweron() and poweroff() work (or at least don't break
      * anything) */
-    uart_poweroff(UART_DEV(dev));
-    xtimer_usleep(POWEROFF_DELAY);
-    uart_poweron(UART_DEV(dev));
+//    uart_poweroff(UART_DEV(dev));
+//    xtimer_usleep(POWEROFF_DELAY);
+//    uart_poweron(UART_DEV(dev));
 
     return 0;
 }
 
-int uart_disable(int dev) {
+int uart_release(int dev) {
     uart_poweroff(UART_DEV(dev));
     return 0;
 }
@@ -51,13 +51,13 @@ int uart_dev_count(void) {
 }
 
 void uart_info(void) {
-    puts("\nUART INFO:");
-    printf("Available devices:               %i\n", UART_NUMOF);
-    printf("UART used for STDIO (the shell): UART_DEV(%i)\n\n", UART_STDIO_DEV);
+    puts("\n[UART INFO]:");
+    printf("Available UART devices:               %i\n", UART_NUMOF);
+    printf("UART used for GPS module: UART_DEV(%i)\n", GPS_UART_DEV);
+    printf("UART used for GSM module: UART_DEV(%i)\n", GSM_UART_DEV);
+    printf("UART used for STDIO (the shell): UART_DEV(%i)\n", UART_STDIO_DEV);
 }
 
 void uart_write_line(int dev, char * data) {
-    uint8_t endline = (uint8_t)'\n';
     uart_write(UART_DEV(dev), (uint8_t *)data, strlen(data));
-    uart_write(UART_DEV(dev), &endline, 1);
 }

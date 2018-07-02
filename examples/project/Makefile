@@ -1,13 +1,26 @@
 # name of your application
 APPLICATION = project
 
+LINKFLAGS += -lc -lrdimon -u _printf_float
+
 # If no BOARD is found in the environment, use this default:
 BOARD ?= nucleo-f401
 
-FEATURES_REQUIRED = periph_uart
+FEATURES_REQUIRED += periph_i2c
+FEATURES_REQUIRED += periph_uart
+FEATURES_REQUIRED += periph_adc
+FEATURES_REQUIRED += periph_gpio
 
 USEMODULE += shell
 USEMODULE += xtimer
+
+EXTERNAL_MODULE_DIRS += $(CURDIR)/thirdparty/jsonlib
+USEMODULE += jsonlib
+INCLUDES += -I$(CURDIR)/thirdparty/jsonlib
+
+EXTERNAL_MODULE_DIRS += $(CURDIR)/thirdparty/mqttlib
+USEMODULE += libmqttlib
+INCLUDES += -I$(CURDIR)/thirdparty/mqttlib
 
 EXTERNAL_MODULE_DIRS += $(CURDIR)/src
 USEMODULE += src

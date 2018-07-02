@@ -1,5 +1,6 @@
 include ../Makefile.tests_common
 
+BOARD = nucleo-f401
 BOARD_INSUFFICIENT_MEMORY := nucleo32-f031
 
 FEATURES_REQUIRED = periph_uart
